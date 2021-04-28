@@ -1,4 +1,5 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+ARG PORT
 WORKDIR /app
 EXPOSE 80
 EXPOSE $PORT
@@ -15,8 +16,8 @@ FROM build AS publish
 RUN dotnet publish "WebApplication4.csproj" -c Release -o /app/publish
 
 FROM base AS final
-WORKDIR /app
 ARG PORT
+WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:$PORT
 RUN echo $ASPNETCORE_URLS
 COPY --from=publish /app/publish .
