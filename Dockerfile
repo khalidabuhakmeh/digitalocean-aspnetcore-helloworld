@@ -1,5 +1,5 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
-ARG PORT=80
+ENV PORT "$PORT"
 WORKDIR /app
 EXPOSE $PORT
 
@@ -15,7 +15,7 @@ FROM build AS publish
 RUN dotnet publish "WebApplication4.csproj" -c Release -o /app/publish
 
 FROM base AS final
-ARG PORT=80
+ENV PORT "$PORT"
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:$PORT
 RUN echo "$ASPNETCORE_URLS"
