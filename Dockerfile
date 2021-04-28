@@ -1,10 +1,5 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
-#ARG PORT=80
-#ENV PORT "$PORT"
-#ENV ASPNETCORE_URLS=http://+:$PORT
-#RUN echo "$ASPNETCORE_URLS"
 WORKDIR /app
-#EXPOSE $PORT
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
