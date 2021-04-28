@@ -1,4 +1,6 @@
+using System;
 using System.Net;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using static System.Environment;
@@ -20,8 +22,7 @@ namespace WebApplication4
                     if (int.TryParse(GetEnvironmentVariable("PORT"), out var port))
                     {
                         webBuilder.ConfigureKestrel(k =>  {
-                            k.Listen(IPAddress.IPv6Loopback, port);
-                            k.Listen(IPAddress.IPv6Loopback, 80);
+                            k.Listen(new UriEndPoint(new Uri($"0.0.0.0:{port}")));
                         });
                     }
                     
