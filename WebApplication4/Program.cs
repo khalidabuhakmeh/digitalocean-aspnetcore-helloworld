@@ -22,7 +22,7 @@ namespace WebApplication4
                     if (int.TryParse(GetEnvironmentVariable("PORT"), out var port))
                     {
                         webBuilder.ConfigureKestrel(k =>  {
-                            k.Listen(new UriEndPoint(new Uri($"0.0.0.0:{port}")));
+                            k.Listen(IPAddress.Parse("0.0.0.0"), port);
                         });
                     }
                     
