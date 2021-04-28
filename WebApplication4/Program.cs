@@ -20,8 +20,8 @@ namespace WebApplication4
                     if (int.TryParse(GetEnvironmentVariable("PORT"), out var port))
                     {
                         webBuilder.ConfigureKestrel(k =>  {
-                            k.Listen(IPAddress.Loopback, port);
-                            k.Listen(IPAddress.Loopback, 80);
+                            k.Listen(IPAddress.Any, port);
+                            k.Listen(IPAddress.Any, 80);
                         });
                     }
                     
