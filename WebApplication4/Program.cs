@@ -1,9 +1,5 @@
-using System;
-using System.Net;
-using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using static System.Environment;
 
 namespace WebApplication4
 {
