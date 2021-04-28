@@ -26,13 +26,17 @@ namespace WebApplication4
         public void ConfigureServices(IServiceCollection services)
         {
             // set up redis
-            services.AddSingleton(s => 
-                ConnectionMultiplexer.Connect(new ConfigurationOptions
-                {
-                    User = Configuration["REDISUSER"],
-                    Password = Configuration["REDISPASSWORD"],
-                    EndPoints = { Configuration["REDISHOST"], Configuration["REDISPORT"] }
-                }));
+            services.AddSingleton(s =>
+            {
+                var options = new ConfigurationOptions();
+                
+                options.EndPoints.Add($"{Configuration["REDISHOST"]}:{Configuration["REDISPORT"]}");
+                options.ClientName = "RailwayApp";
+                options.Password = Configuration["REDISPASSWORD"];
+                options.User = Configuration["REDISUSER"];
+                
+                return ConnectionMultiplexer.Connect(options);
+            });
             
             // return IDatabase
             services.AddScoped(s => {
