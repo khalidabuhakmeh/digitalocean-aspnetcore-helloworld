@@ -26,8 +26,8 @@ namespace WebApplication4
         public void ConfigureServices(IServiceCollection services)
         {
             // set up redis
-            services.AddSingleton(async s =>
-                await ConnectionMultiplexer.ConnectAsync(Configuration["REDIS_URL"]));
+            services.AddSingleton(s => 
+                ConnectionMultiplexer.Connect(Configuration["REDIS_URL"]));
             
             // return IDatabase
             services.AddScoped(s => {
