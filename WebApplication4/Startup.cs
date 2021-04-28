@@ -27,7 +27,12 @@ namespace WebApplication4
         {
             // set up redis
             services.AddSingleton(s => 
-                ConnectionMultiplexer.Connect(Configuration["REDIS_URL"]));
+                ConnectionMultiplexer.Connect(new ConfigurationOptions
+                {
+                    User = Configuration["REDISUSER"],
+                    Password = Configuration["REDISPASSWORD"],
+                    EndPoints = { Configuration["REDISHOST"], Configuration["REDISPORT"] }
+                }));
             
             // return IDatabase
             services.AddScoped(s => {
