@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using static System.Environment;
 
 namespace WebApplication4
 {
@@ -18,6 +14,18 @@ namespace WebApplication4
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    // for railway apps
+                    if (int.TryParse(GetEnvironmentVariable("PORT"), out var port))
+                    {
+                        webBuilder.ConfigureKestrel(k =>  {
+                            k.Listen(IPAddress.Loopback, port);
+                            k.Listen(IPAddress.Loopback, 80);
+                        });
+                    }
+                    
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
